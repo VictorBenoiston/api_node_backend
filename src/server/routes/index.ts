@@ -7,7 +7,7 @@ router.get('/', (req, res) => {
     return res.send('Hey!!!');
 });
 
-router.get('/test', (req, res) => {
+router.get('/test', (req, res, next) => {
     return res.send('Hey, Test!!!');
 });
 
@@ -30,6 +30,7 @@ router.post('/clients/create', (req, res) => {
 router.post('/clients/confer/:id', (req, res) => {
     const { id } = req.params;
 
+    res.status(201);
     console.log(`Created: ${id}`);
     res.json({ id });
 });
