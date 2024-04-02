@@ -1,15 +1,21 @@
 import { Router } from 'express';
 import { StatusCodes } from 'http-status-codes';
 
+import { CitiesController } from './../controllers';
+
 const router = Router();
 
 router.get('/', (req, res) => {
     return res.send('Hey!!!');
 });
 
-router.get('/test', (req, res, next) => {
-    return res.send('Hey, Test!!!');
-});
+
+
+
+router.post('/cities', CitiesController.create);
+
+router.post('/cities/id', CitiesController.updateReq);
+
 
 router.post('/testpost', (req, res) => {
     const { message } = req.body;
