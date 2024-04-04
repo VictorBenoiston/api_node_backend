@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import { StatusCodes } from 'http-status-codes';
 
-import { CitiesController } from './../controllers';
+import { CitiesController, PeopleControllers } from './../controllers';
+import { createValidation } from '../controllers/cities/Create';
 
 const router = Router();
 
@@ -12,16 +12,19 @@ router.get('/', (req, res) => {
 
 
 
-router.post('/cities', CitiesController.create);
+router.post('/cities', CitiesController.createValidation, CitiesController.create);
 
 router.post('/cities/id', CitiesController.updateReq);
+
+router.post('/people', PeopleControllers.create_person);
 
 
 router.post('/testpost', (req, res) => {
     const { message } = req.body;
 
     res.status(201);
-    res.json({message});
+    res.json({ message });
+
 });
 
 
