@@ -1,8 +1,16 @@
 import * as create from './Create';
-import * as update from './Update';
+import * as update from './UpdateById';
+import * as getAll from './GetAll';
+import * as getById from './GetById';
+import * as updateById from './UpdateById';
+import * as deleteById from './DeleteById';
 
 
 export const CitiesController = {
     ...create,
-    ...update
+    ...update,
+    ...getAll,
+    ...getById,
+    ...updateById,
+    ...deleteById
 };
