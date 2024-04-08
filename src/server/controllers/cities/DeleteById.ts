@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { validation } from '../../shared/middlewares';
 import * as yup from 'yup';
+import { CitiesProvider } from '../../database/providers/cities';
 
 
 interface IParamProps {
@@ -13,13 +14,24 @@ export const deleteByIdValidation = validation(getSchema => ({
     })),
 }));
 
+export const deleteById = async (req:Request<IParamProps>, res: Response) => {
 
-export const deleteById = (req:Request, res: Response) => {
-    
-    if (Number(req.params.id) === 99999) return res.status(404).json({
-        errors: 'Internal Register not Found'
-    });
-        
+    // To prevent being undefined
+    if (!req.params.id){
+        return res.status(400).json({errors: {
+            default: 'The id must be informed'
+        }});
+    }
 
-    res.status(204).send(`Deleted id: ${req.params.id}`);
+    const result = await CitiesProvider.deleteById(req.params.id);
+
+    if (result instanceof Error){
+        return res.status(500).json({
+            errors: {
+                default: result.message
+            }
+        });
+    }
+
+    return res.status(204).send();
 };

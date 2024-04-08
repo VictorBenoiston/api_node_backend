@@ -5,7 +5,7 @@ import { testServer } from '../jest.setup';
 describe('Cities - Update By Id', () => {
     it('Update an item', async () => {
         const ans1 = await testServer
-            .put('/cities/10')
+            .put('/cities/9')
             .send({
                 name: 'Mossoró',
                 state: 'Rio'
@@ -17,7 +17,7 @@ describe('Cities - Update By Id', () => {
 
     it('Not Enough Characters', async () => {
         const ans1 = await testServer
-            .put('/cities/10')
+            .put('/cities/9')
             .send({
                 name: 'mo',
                 state: 'Ro'
@@ -30,7 +30,7 @@ describe('Cities - Update By Id', () => {
 
     it('Missing Required Fields', async () => {
         const ans1 = await testServer
-            .put('/cities/10')
+            .put('/cities/9')
             .send({
                 namse: 'mos',
                 statae: 'Rof'

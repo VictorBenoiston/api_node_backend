@@ -7,7 +7,8 @@ export async function up(knex: Knex) {
         .schema
         .createTable(EnumTableNames.cities, table => {
             table.bigIncrements('id').primary().index();
-            table.string('name', 150).index().notNullable();
+            table.string('name', 150).checkLength('<=', 150).index().notNullable();
+            table.string('state', 150).checkLength('<=', 150).index().notNullable();
 
             table.comment('Table used to store cities in our system');
 

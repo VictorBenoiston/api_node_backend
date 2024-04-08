@@ -5,7 +5,7 @@ import { testServer } from '../jest.setup';
 describe('Cities - Get By ID', () => {
     it('Retrieve Item with ID', async () => {
         const ans1 = await testServer
-            .get('/cities/1');
+            .get('/cities/12');
         expect(ans1.statusCode).toEqual(200);
         expect(ans1.body).toHaveProperty('name');
     });
