@@ -1,35 +1,30 @@
-import { Request, Response } from 'express';
+import { Request, RequestHandler, Response } from 'express';
 import * as yup from 'yup';
+import { validation } from '../../shared/middlewares';
+import { IPerson } from '../../database/models';
+import { PeopleProviders } from '../../database/providers/people';
 
-interface IPerson {
-    name: string,
-    CPF: string,
-    age: number,
-    marital_status: string,
-    gender: string,
-    employed: boolean
-}
 
-const person_body_validation: yup.ObjectSchema<IPerson> = yup.object().shape({
-    name: yup.string().required(),
-    CPF: yup.string().required().length(11),
-    age: yup.number().required(),
-    marital_status: yup.string().required(),
-    gender: yup.string().required(),
-    employed: yup.boolean().required()
-});
+interface IBodyProps extends Omit<IPerson, 'id'> { }
 
-export const create_person = async (req: Request<{}, {}, IPerson>, res: Response) => {
-    let validatedDataPerson: IPerson | undefined = undefined;
+export const createValidation = validation(getSchema => ({
+    body: getSchema<IBodyProps>(yup.object().shape({
+        email: yup.string().required().email(),
+        cityId: yup.number().required().moreThan(0),
+        firstName: yup.string().required().max(50).min(2),
+        lastName: yup.string().required().max(50).min(2)
+    }))
+})); 
 
-    try {
-        validatedDataPerson = await person_body_validation.validate(req.body);
-        res.send(`${validatedDataPerson.name} was added as a Person!`);
-    } catch (error){
-        const yupError = error as yup.ValidationError;
-
-        return res.status(400).send(`${yupError.name}: ${yupError.message}`);
+export const create = async (req: Request<{}, {}, IPerson>, res: Response) => {
+    const result = await PeopleProviders.create(req.body);
+    if (result instanceof Error) {
+        return res.status(500).json({
+            errors: {
+                default: result.message
+            }
+        });
     }
 
-    res.status(201).json(validatedDataPerson);
+    res.status(201).json(result);
 };

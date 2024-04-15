@@ -1,3 +1,4 @@
 export enum EnumTableNames {
-    cities = 'cities'
+    cities = 'cities',
+    people = 'people'
 }

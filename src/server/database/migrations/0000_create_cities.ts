@@ -24,7 +24,6 @@ export async function down(knex: Knex) {
         .dropTable(EnumTableNames.cities)
 
         .then(() => {
-            console.log(`Rollback! # Droped table ${EnumTableNames.cities}`);
+            console.log(`# Rollback! Droped table ${EnumTableNames.cities}`);
         });
 }
-

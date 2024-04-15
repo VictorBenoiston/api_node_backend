@@ -1,10 +1,10 @@
 import { EnumTableNames } from '../../EnumTableNames';
-import { ICity } from '../../models';
 import { Knex } from '../../knex';
+import { IPerson } from '../../models';
 
-export const getById = async (id: number): Promise<ICity | Error> => {
+export const getById = async (id: number): Promise<IPerson | Error> => {
     try {
-        const selectedRow = await Knex(EnumTableNames.cities)
+        const selectedRow = await Knex(EnumTableNames.people)
             // Return all the columns, but it could be specific ones.
             .select('*')
             .where('id', '=', id)
