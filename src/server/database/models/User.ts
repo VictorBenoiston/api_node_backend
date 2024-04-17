@@ -1,7 +1,8 @@
-export interface IPerson {
+export interface IUser {
     id: number;
+    user: string;
     email: string;
-    cityId: number;
+    password: string;
     firstName: string;
     lastName: string;
 }
