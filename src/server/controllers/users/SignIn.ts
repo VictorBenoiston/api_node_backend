@@ -39,6 +39,6 @@ export const signIn = async (req: Request<IBodyProps>, res: Response) => {
             }
         });
     } else {
-        return res.status(200).json({ accessToken: 'teste.teste.teste' });
+        return res.status(200).json({ accessToken: 'test.test.test' });
     }
 };
