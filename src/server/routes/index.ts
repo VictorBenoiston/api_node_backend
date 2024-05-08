@@ -1,7 +1,6 @@
 import { Router } from 'express';
 
 import { CitiesController, PeopleControllers, UsersControllers } from './../controllers';
-import { createValidation } from '../controllers/cities/Create';
 import { ensureAuthenticated } from '../shared/middlewares';
 
 const router = Router();

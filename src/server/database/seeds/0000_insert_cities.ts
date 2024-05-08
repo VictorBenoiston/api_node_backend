@@ -1,7 +1,5 @@
 import { Knex } from 'knex';
 import { EnumTableNames } from '../EnumTableNames';
-import { number } from 'yup';
-
 
 export const seed = async (knex: Knex) => {
 

@@ -4,6 +4,7 @@ import * as yup from 'yup';
 import { UsersProvider } from '../../database/providers/users';
 import { IUser } from '../../database/models';
 import { PasswordCrypt } from '../../shared/services/PasswordCrypto';
+import { JWTService } from '../../shared/services';
 
 
 interface IBodyProps extends Omit<IUser, 'id' | 'user' | 'firstName' | 'lastName'> { }
@@ -39,6 +40,16 @@ export const signIn = async (req: Request<IBodyProps>, res: Response) => {
             }
         });
     } else {
-        return res.status(200).json({ accessToken: 'test.test.test' });
+        const accessToken = JWTService.sign({uid: result.id});
+        if (accessToken === 'JWT_SECRET_NOT_FOUND'){
+            return res.status(500).json({
+                errors: {
+                    default: 'Error while generating access token'
+                }
+            });
+        }
+        
+        return res.status(200).json({ accessToken });
     }
 };
+

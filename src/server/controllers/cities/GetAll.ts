@@ -25,6 +25,8 @@ export const getAll = async (req: Request<{}, {}, {}, IQueryProps>, res: Respons
     const result = await CitiesProvider.getAll(req.query.page || 1, req.query.limit || 10, req.query.filter || '', Number(req.query.id));
     const count = await CitiesProvider.count(req.query.filter);
 
+    console.log('idUsuario', req.headers.idUser);
+
     if (result instanceof Error) {
         return res.status(500).json({
             errors: {
